@@ -14,9 +14,7 @@ abstract class {{Feature}}BaseRemoteDataSource {
 class {{Feature}}RemoteDataSource
     extends {{Feature}}BaseRemoteDataSource {
 
-  final Dio dio;
-
-  {{Feature}}BaseRemoteDataSource(this.dio);
+final dio = sl<Dio>();
 
   @override
   Future<{{Feature}}Model> {{Feature}}({
