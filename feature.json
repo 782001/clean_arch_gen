@@ -1,9 +1,9 @@
 {
-  "feature": "add_to_cart",
-  "layer_path": "app_features/cart",
+  "feature": "search_for_product_by_category_id",
+  "layer_path": "app_features/categories",
 
   "endpoint": {
-    "url": "add_to_cart",
+    "url": "searchForProductByCategoryIdEndPoint",
     "method": "get",
     "auth": "bearer"
    
@@ -12,16 +12,20 @@
   "request": {
     "path_params": {},
     "query": {
-        "productId": "String",
-      "quantity": "int"},
-    "body": {
-      "productId": "String",
-      "quantity": "int"
-    }
+        "q": "String",
+        "categoryId": "String"},
+"body": {
+  "productId": "String",
+  "rating": "int",
+  "title": "String",
+  "body": "String"
+}
+
+
   },
 
   "response": {
-    "entity": "AddToCartResponseEntity",
+    "entity": "SearchForProductByCategoryIdResponseEntity",
     "fields": {
       "success": "bool",
       "message": "String",

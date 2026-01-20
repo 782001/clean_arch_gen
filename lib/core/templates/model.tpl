@@ -1,7 +1,6 @@
-import '../../domain/entities/{{entity}}.dart';
 
-class {{Feature}}Model extends {{entity}} {
-  {{Feature}}Model({super.message});
+class {{Feature}}ResponseModel extends {{entity}} {
+  {{Feature}}ResponseModel({super.message});
 
   factory {{Feature}}Model.fromJson(Map<String, dynamic> json) {
     return {{Feature}}Model(

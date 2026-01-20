@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import '../entities/{{entity}}.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class {{Feature}}BaseRepository {

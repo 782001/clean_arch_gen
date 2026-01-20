@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:daleel/core/utils/app_strings.dart';
+import 'package:pharmacy/core/utils/app_strings.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../../core/network/api_constance.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pharmacy/config/services/injection_container.dart';
 
 abstract class {{Feature}}BaseRemoteDataSource {
-  Future<{{Feature}}Model> {{Feature}}({
+  Future<{{Feature}}ResponseModel> {{Feature}}({
     required {{Feature}}Parameters parameters,
   });
 }
@@ -17,7 +18,7 @@ class {{Feature}}RemoteDataSource
 final dio = sl<Dio>();
 
   @override
-  Future<{{Feature}}Model> {{Feature}}({
+  Future<{{Feature}}ResponseModel> {{Feature}}({
     required {{Feature}}Parameters parameters,
   }) async {
     try{
@@ -28,6 +29,8 @@ final dio = sl<Dio>();
 
        final response = await dio.{{method}}(
       ApiConstance.{{endpoint}},
+      //      "${ApiConstance.{{endpoint}}}/${parameters.productId}",
+
        queryParameters: {
        {{queryParameters}}
         },
@@ -35,7 +38,7 @@ final dio = sl<Dio>();
         {{dataBodyMap}}   
            },
     );
-     return {{Feature}}Model.fromJson(response.data);  }on DioError catch (error) {
+     return {{Feature}}ResponseModel.fromJson(response.data);  }on DioError catch (error) {
       if (error.response != null) {
         // ShowToust(Text: error.response!.data["message"]);
         throw error.response!.data;

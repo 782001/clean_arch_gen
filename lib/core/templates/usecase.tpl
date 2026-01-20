@@ -2,8 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/base_usecase/base_usecase.dart';
-import '../entities/{{entity}}.dart';
-import '../repositories/{{feature}}_base_repository.dart';
 
 class {{Feature}}UseCase
     extends BaseUseCase<{{entity}}, {{Feature}}Parameters> {
