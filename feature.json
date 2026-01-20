@@ -1,0 +1,35 @@
+{
+  "feature": "add_to_cart",
+  "layer_path": "app_features/cart",
+
+  "endpoint": {
+    "url": "add_to_cart",
+    "method": "get",
+    "auth": "bearer"
+   
+  },
+
+  "request": {
+    "path_params": {},
+    "query": {
+        "productId": "String",
+      "quantity": "int"},
+    "body": {
+      "productId": "String",
+      "quantity": "int"
+    }
+  },
+
+  "response": {
+    "entity": "AddToCartResponseEntity",
+    "fields": {
+      "success": "bool",
+      "message": "String",
+      "data": "CartEntity"
+    }
+  },
+
+  "presentation": {
+    "cubit": true
+  }
+}
