@@ -1,4 +1,4 @@
-// {{feature}}
+// {{Module}}
   /// -----{{Module}}Cubit------
 sl.registerFactory<{{Module}}Cubit>(() => {{Module}}Cubit(
   k{{Feature}}UseCase: sl(),

@@ -1,6 +1,14 @@
 {
-  "feature": "search_for_product_by_category_id",
-  "layer_path": "app_features/categories",
+  "feature": "remove_from_wishlist",
+  "layer_path": "app_features/wishlist",
+  "response": {
+    "entity": "RemoveFromWishlistResponseEntity",
+    "fields": {
+      "success": "bool",
+      "message": "String",
+      "data": "CartEntity"
+    }
+  },
 
   "endpoint": {
     "url": "searchForProductByCategoryIdEndPoint",
@@ -24,14 +32,6 @@
 
   },
 
-  "response": {
-    "entity": "SearchForProductByCategoryIdResponseEntity",
-    "fields": {
-      "success": "bool",
-      "message": "String",
-      "data": "CartEntity"
-    }
-  },
 
   "presentation": {
     "cubit": true

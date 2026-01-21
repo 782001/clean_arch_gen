@@ -46,6 +46,9 @@ class PlaceholderResolver {
         .replaceAll('{{dataBodyMap}}', buildBodyMap(s))
         .replaceAll('{{queryParameters}}', buildQueryParameters(s));
     t = t.replaceAll('{{method}}', s.endpoint.method);
+    t = t.replaceAll('{{featureCamel}}', _camel(s.feature));
+    t = t.replaceAll('{{entityCamel}}', _camel(s.response.entity));
+
     t = t
         .replaceAll('{{parameters}}', buildParameters(s))
         .replaceAll('{{constructor}}', buildConstructor(s))
@@ -67,6 +70,12 @@ class PlaceholderResolver {
     }
 
     return '${s.feature}_${tpl.replaceAll('.tpl', '')}.dart';
+  }
+
+  String _camel(String v) {
+    final p =
+        v.split('_').map((e) => e[0].toUpperCase() + e.substring(1)).join();
+    return p[0].toLowerCase() + p.substring(1);
   }
 
   String buildParameters(FeatureSchema s) =>

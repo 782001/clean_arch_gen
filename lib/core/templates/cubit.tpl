@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
-import '{{feature}}_states.dart';
 
 class {{Module}}Cubit extends Cubit<{{Module}}State> {
   final {{Feature}}UseCase k{{Feature}}UseCase;
@@ -11,8 +10,8 @@ class {{Module}}Cubit extends Cubit<{{Module}}State> {
 
   static {{Module}}Cubit get(context) =>
       BlocProvider.of<{{Module}}Cubit>(context);
-
-  void {{Feature}}Mithode({
+{{entity}}? {{entityCamel}};
+  void {{featureCamel}}Mithode({
     {{cubitParameters}}
   }) async {
     emit({{Feature}}LoadingState());
@@ -28,16 +27,14 @@ class {{Module}}Cubit extends Cubit<{{Module}}State> {
         debugPrint('Failure: {{Feature}}ErrorState');
         emit(
           {{Feature}}ErrorState(
-            messageApi: r.message??"failure",
-            messageError: r.message??"Network Error",
-          ),
+       ),
         );
       },
-      (r) {
+      (r) {{{entityCamel}}=r;
         debugPrint('Success: ${r.message}');
         emit(
           {{Feature}}SucssesState(
-            message: r.message,
+            message: r.message!,
           ),
         );
       },
