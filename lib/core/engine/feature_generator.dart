@@ -10,6 +10,8 @@ class FeatureGenerator {
   FeatureGenerator(this.schema, this.writer, this.resolver);
 
   void generate() {
+    final module = _moduleFromLayerPath(schema.layerPath);
+
     _gen('entity.tpl', 'domain/entities');
     _gen('model.tpl', 'data/models');
     _gen('remote_ds.tpl', 'data/data_sources');
@@ -18,8 +20,18 @@ class FeatureGenerator {
     _gen('usecase.tpl', 'domain/usecases');
 
     if (schema.presentation.cubit) {
-      _gen('cubit.tpl', 'presentation/cubit');
+      _gen('cubit.tpl', 'presentation/controller/${module}_cubit');
+      _gen('states.tpl', 'presentation/controller/${module}_cubit');
+      _gen(
+        'injection_container.tpl',
+        'presentation/controller/${module}_cubit',
+      );
     }
+  }
+
+  String _moduleFromLayerPath(String path) {
+    // app_features/categories → categories
+    return path.split('/').last;
   }
 
   void _gen(String tpl, String folder) {

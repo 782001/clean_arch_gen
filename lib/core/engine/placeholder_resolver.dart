@@ -4,6 +4,15 @@ import '../../schema/feature_schema.dart';
 class PlaceholderResolver {
   String _pascal(String v) =>
       v.split('_').map((e) => e[0].toUpperCase() + e.substring(1)).join();
+  String moduleNameFromPath(String path) {
+    // app_features/categories → categories
+    return path.split('/').last;
+  }
+
+  String pascalFromPath(String path) {
+    final name = moduleNameFromPath(path);
+    return name[0].toUpperCase() + name.substring(1);
+  }
 
   String buildBodyMap(FeatureSchema s) => s.request.body.entries
       .map((e) => "'${e.key}': parameters.${e.key}")
@@ -11,6 +20,11 @@ class PlaceholderResolver {
   String buildQueryParameters(FeatureSchema s) => s.request.query.entries
       .map((e) => "'${e.key}': parameters.${e.key}")
       .join(',\n        ');
+  String buildCubitParameters(FeatureSchema s) =>
+      _allParams(s).map((e) => 'required ${e.value} ${e.key},').join('\n    ');
+
+  String buildUsecaseParams(FeatureSchema s) =>
+      _allParams(s).map((e) => '${e.key}: ${e.key},').join('\n        ');
 
   String resolve(String template, FeatureSchema s) {
     var t = File('lib/core/templates/$template').readAsStringSync();
@@ -18,6 +32,15 @@ class PlaceholderResolver {
     t = t.replaceAll('{{Feature}}', _pascal(s.feature));
     t = t.replaceAll('{{feature}}', s.feature);
     t = t.replaceAll('{{entity}}', s.response.entity);
+    t = t
+        .replaceAll('{{cubitParameters}}', buildCubitParameters(s))
+        .replaceAll('{{usecaseParams}}', buildUsecaseParams(s));
+    final module = moduleNameFromPath(s.layerPath);
+    final modulePascal = pascalFromPath(s.layerPath);
+
+    t = t.replaceAll('{{Module}}', modulePascal);
+    t = t.replaceAll('{{module}}', module);
+
     t = t
         .replaceAll('{{endpoint}}', s.endpoint.url)
         .replaceAll('{{dataBodyMap}}', buildBodyMap(s))
@@ -34,8 +57,17 @@ class PlaceholderResolver {
     return t.replaceAll('{{fields}}', fields);
   }
 
-  String fileName(String tpl, FeatureSchema s) =>
-      '${s.feature}_${tpl.replaceAll('.tpl', '')}.dart';
+  String fileName(String tpl, FeatureSchema s) {
+    final module = moduleNameFromPath(s.layerPath);
+
+    if (tpl == 'cubit.tpl' ||
+        tpl == 'states.tpl' ||
+        tpl == 'injection_container.tpl') {
+      return '${module}_${tpl.replaceAll('.tpl', '')}.dart';
+    }
+
+    return '${s.feature}_${tpl.replaceAll('.tpl', '')}.dart';
+  }
 
   String buildParameters(FeatureSchema s) =>
       _allParams(s).map((e) => 'final ${e.value} ${e.key};').join('\n  ');
